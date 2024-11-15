@@ -4,8 +4,8 @@
   "description": "tinder for devs",
   "main": "index.js",
   "scripts": {
-    "start" : "node app/src.js",
-    "dev" : "nodemon app/src.js"
+    "start" : "node src/app.js",
+    "dev" : "nodemon src/app.js"
   },
   "keywords": [
     "nodejs",
