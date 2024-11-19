@@ -17,13 +17,14 @@ app.use("/user",(req,res,next)=>{
     console.log("Handling route 1!!")
     next();
     // res.send("Response 1");
-},(req,res)=>{
+},(req,res,next)=>{
     console.log("Handling route 2!!")
-    res.send("Response 2");
-},(req,res)=>{
+    // res.send("Response 2");
+    next();
+},(req,res,next)=>{
     console.log("Handling route 3!!")
     res.send("Response 3");
-},(req,res)=>{
+},(req,res,next)=>{
     console.log("Handling route 4!!")
     res.send("Response 4");
 })
