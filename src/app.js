@@ -66,6 +66,35 @@ app.delete("/user",async (req,res)=>{
   }
 })
 
+//Update data of the user
+
+
+
+app.patch("/user", async (req, res) => {
+  const { userId, ...data } = req.body;
+  // const userId = req.body.userId;
+  // const data = req.body
+
+  if (!userId) {
+    return res.status(400).send("User ID is required");
+  }
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate({_id:userId}, data, { new: true, runValidators: true });
+   
+
+    if (!updatedUser) {
+      return res.status(404).send("User not found");
+    }
+
+    console.log(updatedUser);
+    res.status(200).send("User updated successfully");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Updation failed" + " "+err.message);
+  }
+});
+
 
 connectDB()
   .then(() => {
