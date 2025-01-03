@@ -32,3 +32,33 @@
 - Difference between app.use() and app.all()
 - Write a dummy auth middleware for admin
 - Write a dummy auth middleware for user routes ,except /user/login
+- Error Handling using app.use("/",(err,req,res,next) =>{});
+
+- Create a free cluster on MongoDB official website (Mongo Atlas)
+- Install mongoose library
+- Connect your application to the Database "Connection-url" /devTinder
+- Call the connectDB function and connect to database before starting application on 3000
+- Create a userSchema and userModel
+- Create POST /singup API  to add data to database
+- Push some doucments using API calls from postman
+- Error Handling using try ,catch
+- JS object vs JSON (difference)
+- Add the express.json() middleware to your app
+- Make your signup API dynamic to receive data from the end user
+- User.findOne with duplicate email ids which object will be returned
+- API - Get user by email
+- API - Feed API - GET/feed - get all the users from the database
+- API - Get user by ID
+- Create a delete user API 
+- Difference between PATCH and PUT
+- API - Update a user
+- Explore the Mongoose Documention for Model methods
+- What are options in a Model.findOneAndUpdate method, explore more about it 
+- API - update the user with email id
+
+- Explore schematype options from the documentation
+- add required,unique,lowercase,min, minLength,trim
+- Add default 
+- Create a custom validate function for gender
+- Improve the DB Schema - PUT all appropriate validation on each field in schema 
+- Add timestamp to the userSchema
