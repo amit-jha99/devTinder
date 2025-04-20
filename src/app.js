@@ -2,14 +2,22 @@ const express = require("express");
 const connectDB = require("./config/database");
 const app = express();
 const User = require("./models/user");
+const {validateSignUpData} = require("./utils/validation");
 app.use(express.json());
 
+
 app.post("/signup", async (req, res) => {
-  console.log(req.body);
+  
+  //validate the data coming from the client
+  try {
+  validateSignUpData(req); //This function will throw an error if the data is not valid
+
+
+  //Encrypt the password
 
   //Creating a new instance of the User model
   const user = new User(req.body);
-  try {
+  
     await user.save(); //This function returns you a  promise infact most of the mongoose function return you a promise
     res.send("User Added succesfully!");
   } catch (err) {
@@ -61,21 +69,14 @@ app.delete("/user", async (req, res) => {
 app.patch("/user/:userId", async (req, res) => {
   // const { userId, ...data } = req.body;
   const userId = req.params?.userId;
-  const data = req.body
+  const data = req.body;
 
   if (!userId) {
     return res.status(400).send("User ID is required");
   }
 
   try {
-    const ALLOWED_UPDATES = [
-      
-      "photoUrl",
-      "about",
-      "gender",
-      "skills",
-      "age",
-    ];
+    const ALLOWED_UPDATES = ["photoUrl", "about", "gender", "skills", "age"];
 
     const isUpdateAllowed = Object.keys(data).every((k) =>
       ALLOWED_UPDATES.includes(k)
@@ -83,8 +84,8 @@ app.patch("/user/:userId", async (req, res) => {
     if (!isUpdateAllowed) {
       throw new Error("Invalid updates!");
     }
-    if(data?.skills.length > 5){
-      throw new Error("Skills should be less than 5!!")
+    if (data?.skills.length > 5) {
+      throw new Error("Skills should be less than 5!!");
     }
     const updatedUser = await User.findByIdAndUpdate({ _id: userId }, data, {
       new: true,
