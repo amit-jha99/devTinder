@@ -67,3 +67,7 @@
 - Install validator
 - Explore validator library function and user validtor functions for password, email and URL.
 - Never trust req.body
+
+- validate data in Signup API
+- Install bcrypt package
+- Create PasswordHash using bcrypt.hash & save the user is encrypted password.
