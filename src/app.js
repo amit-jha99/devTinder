@@ -20,7 +20,16 @@ app.post("/signup", async (req, res) => {
   console.log(passwordHash); //This will give you the hashed password
 
   //Creating a new instance of the User model
-  const user = new User(req.body);
+  // const user = new User(req.body);
+
+  //this is the good pratice to create a new instance of the model
+  const user = new User ({
+    firstName,
+    lastName,
+    emailId,
+    password: passwordHash, //Storing the hashed password in the database
+
+  })
   
     await user.save(); //This function returns you a  promise infact most of the mongoose function return you a promise
     res.send("User Added succesfully!");
