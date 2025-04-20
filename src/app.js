@@ -2,35 +2,32 @@ const express = require("express");
 const connectDB = require("./config/database");
 const app = express();
 const User = require("./models/user");
-const {validateSignUpData} = require("./utils/validation");
+const { validateSignUpData } = require("./utils/validation");
 const bycrypt = require("bcrypt");
 app.use(express.json());
 
-
 app.post("/signup", async (req, res) => {
-  
   //validate the data coming from the client
   try {
-  validateSignUpData(req); //This function will throw an error if the data is not valid
+    validateSignUpData(req); //This function will throw an error if the data is not valid
 
- const { password } = req.body; //Destructuring the password from the request body
-  //Encrypt the password  
-  const passwordHash  = await bycrypt.hash(password, 10); //10 is the number of rounds for hashing the password
+    const { firstName, lastName, emailId, password } = req.body; //Destructuring the password from the request body
+    //Encrypt the password
+    const passwordHash = await bycrypt.hash(password, 10); //10 is the number of rounds for hashing the password
 
-  console.log(passwordHash); //This will give you the hashed password
+    console.log(passwordHash); //This will give you the hashed password
 
-  //Creating a new instance of the User model
-  // const user = new User(req.body);
+    //Creating a new instance of the User model
+    // const user = new User(req.body);
 
-  //this is the good pratice to create a new instance of the model
-  const user = new User ({
-    firstName,
-    lastName,
-    emailId,
-    password: passwordHash, //Storing the hashed password in the database
+    //this is the good pratice to create a new instance of the model
+    const user = new User({
+      firstName,
+      lastName,
+      emailId,
+      password: passwordHash, //Storing the hashed password in the database
+    });
 
-  })
-  
     await user.save(); //This function returns you a  promise infact most of the mongoose function return you a promise
     res.send("User Added succesfully!");
   } catch (err) {
