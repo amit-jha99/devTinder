@@ -3,6 +3,7 @@ const connectDB = require("./config/database");
 const app = express();
 const User = require("./models/user");
 const {validateSignUpData} = require("./utils/validation");
+const bycrypt = require("bcrypt");
 app.use(express.json());
 
 
@@ -12,8 +13,11 @@ app.post("/signup", async (req, res) => {
   try {
   validateSignUpData(req); //This function will throw an error if the data is not valid
 
+ const { password } = req.body; //Destructuring the password from the request body
+  //Encrypt the password  
+  const passwordHash  = await bycrypt.hash(password, 10); //10 is the number of rounds for hashing the password
 
-  //Encrypt the password
+  console.log(passwordHash); //This will give you the hashed password
 
   //Creating a new instance of the User model
   const user = new User(req.body);
