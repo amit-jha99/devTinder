@@ -64,3 +64,6 @@
 - Add timestamp to the userSchema
 - Add API level validation to PATCH request & Singup POST API.
 - Data Sanitization.Add API validation for each field.
+- Install validator
+- Explore validator library function and user validtor functions for password, email and URL.
+- Never trust req.body
