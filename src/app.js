@@ -83,6 +83,9 @@ app.patch("/user/:userId", async (req, res) => {
     if (!isUpdateAllowed) {
       throw new Error("Invalid updates!");
     }
+    if(data?.skills.length > 5){
+      throw new Error("Skills should be less than 5!!")
+    }
     const updatedUser = await User.findByIdAndUpdate({ _id: userId }, data, {
       new: true,
       runValidators: true,
