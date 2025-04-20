@@ -35,6 +35,27 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+
+//Login API - POST/login - login the user
+app.post("/login",async(req,res )=>{
+  const {emailId,password} = req.body;
+  try{
+    const user = await User.findOne({emailId});
+    if(!user){
+      return res.status(404).send("User not found!!");
+    }
+    const isPasswordMatch = await bycrypt.compare(password,user.password);
+    if(!isPasswordMatch){
+      return res.status(401).send("Invalid password!!");
+    }
+    res.send("Login successfull!!")
+  }catch(err){
+    res.status(400).send("Something went wrong!!" + err.message);
+  }
+})
+
+
+
 //Get user by email
 app.get("/user", async (req, res) => {
   const userEmail = req.body.emailId;
