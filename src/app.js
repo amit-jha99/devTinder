@@ -4,7 +4,10 @@ const app = express();
 const User = require("./models/user");
 const { validateSignUpData } = require("./utils/validation");
 const bycrypt = require("bcrypt");
+const cookieParser = require('cookie-parser')
+
 app.use(express.json());
+app.use(cookieParser());
 
 app.post("/signup", async (req, res) => {
   //validate the data coming from the client
@@ -63,6 +66,11 @@ app.post("/login",async(req,res )=>{
 })
 
 
+app.get("/profile",async(req,res)=>{
+    const cookies = req.cookies;
+    console.log(cookies);
+    res.send("Reading cookies....");
+})
 
 //Get user by email
 app.get("/user", async (req, res) => {
