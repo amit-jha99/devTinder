@@ -6,6 +6,7 @@ const { validateSignUpData } = require("./utils/validation");
 const bycrypt = require("bcrypt");
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const { userAuth } = require("./middlewares/auth");
 
 app.use(express.json());
 app.use(cookieParser());
@@ -74,26 +75,15 @@ app.post("/login",async(req,res )=>{
 })
 
 
-app.get("/profile",async(req,res)=>{
+app.get("/profile", userAuth,async(req,res)=>{
   try{
-    const cookies = req.cookies;
-
-    const {token} = cookies;
-    if(!token){
-      throw new Error("Invalid token!!");
-    }
-
-
-    const decodedMessage = await jwt.verify(token,'AMIT@777$99');
     
-    const {_id} = decodedMessage; //Destructuring the id from the decoded message
 
-    const user = await User.findById(_id);
-    if(!user){
-      return res.status(404).send("User not found!!");
-    }else{
+  
+    const user = req.user; //This will give you the user object from the middleware
+    
       res.send(user);
-    }
+    
   }catch(err){
     res.status(400).send("Something went wrong!!" + err.message);
   }

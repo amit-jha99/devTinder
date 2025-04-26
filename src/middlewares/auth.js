@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const User = require("../models/userModel"); 
+const User = require("../models/user"); 
 const userAuth = async (req, res, next) => {
   // Read the token from the request cookies
   try {
@@ -16,6 +16,8 @@ const userAuth = async (req, res, next) => {
     if (!user) {
       return res.status(401).send("User not found!!");
     }
+
+    req.user = user; // Attach the user object to the request for later use
     next(); // Call the next middleware or route handler
    
    
