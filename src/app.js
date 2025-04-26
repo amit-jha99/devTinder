@@ -90,6 +90,12 @@ app.get("/profile", userAuth,async(req,res)=>{
    
 })
 
+app.post("/sendConnectionRequest",userAuth,async(req,res)=>{
+  const user = req.user;
+  console.log("Connection request sent!!")
+  res.send(user.firstName + " " + user.lastName + " sent you a connection request!!");
+  
+})
 
 connectDB()
   .then(() => {
