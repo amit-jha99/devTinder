@@ -78,6 +78,11 @@ app.get("/profile",async(req,res)=>{
     const cookies = req.cookies;
 
     const {token} = cookies;
+
+     const decodedMessage = await jwt.verify(token,'AMIT@777$99');
+    console.log(decodedMessage); //This will give you the decoded message
+    const {_id} = decodedMessage; //Destructuring the id from the decoded message
+    console.log("Logged In user is :" + _id);
     console.log(cookies);
     res.send("Reading cookies....");
 })
