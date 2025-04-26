@@ -83,7 +83,12 @@ app.get("/profile",async(req,res)=>{
     console.log(decodedMessage); //This will give you the decoded message
     const {_id} = decodedMessage; //Destructuring the id from the decoded message
     console.log("Logged In user is :" + _id);
-    console.log(cookies);
+    const user = await User.findById(_id);
+    if(!user){
+      return res.status(404).send("User not found!!");
+    }else{
+      res.send(user);
+    }
     res.send("Reading cookies....");
 })
 
