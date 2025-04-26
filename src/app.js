@@ -84,10 +84,10 @@ app.get("/profile",async(req,res)=>{
     }
 
 
-     const decodedMessage = await jwt.verify(token,'AMIT@777$99');
-    console.log(decodedMessage); //This will give you the decoded message
+    const decodedMessage = await jwt.verify(token,'AMIT@777$99');
+    
     const {_id} = decodedMessage; //Destructuring the id from the decoded message
-    console.log("Logged In user is :" + _id);
+
     const user = await User.findById(_id);
     if(!user){
       return res.status(404).send("User not found!!");
