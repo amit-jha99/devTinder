@@ -77,5 +77,14 @@ userSchema.methods.getJWT = async function(){
       return token;
 }
 
+userSchema.methods.validtePassword = async function(){
+    const user = this;
+    const isPasswordMatch  = await bycrypt.compare(password, user.password);
+    if(!isPasswordMatch){
+        throw new Error("Invalid credentials!!");
+    }
+    return isPasswordMatch;
+}
+
 const User = mongoose.model("User",userSchema);
 module.exports = User;
