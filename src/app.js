@@ -60,7 +60,7 @@ app.post("/login", async (req, res) => {
       console.log(token); //This will give you the token
 
       // Add the token to cookie and send the response back to the user
-      res.cookie("token", token);
+      res.cookie("token", token,{expires: new Date(Date.now() + 900000)});
       res.send("Login successfull!!");
     } else {
       return res.status(401).send("Invalid credentials!!");
