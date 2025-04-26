@@ -4,8 +4,8 @@ const app = express();
 const User = require("./models/user");
 const { validateSignUpData } = require("./utils/validation");
 const bycrypt = require("bcrypt");
-const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
+const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
 const { userAuth } = require("./middlewares/auth");
 
 app.use(express.json());
@@ -40,62 +40,53 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-
 //Login API - POST/login - login the user
-app.post("/login",async(req,res )=>{
-  const {emailId,password} = req.body;
-  try{
-    const user = await User.findOne({emailId});
-    if(!user){
+app.post("/login", async (req, res) => {
+  const { emailId, password } = req.body;
+  try {
+    const user = await User.findOne({ emailId });
+    if (!user) {
       return res.status(404).send("User not found!!");
     }
-    const isPasswordMatch = await bycrypt.compare(password,user.password);
-    
-    if(isPasswordMatch){
+    const isPasswordMatch = await bycrypt.compare(password, user.password);
 
+    if (isPasswordMatch) {
       //here I will write the logic of cookie
 
-      // create a JWT token  
-      const token  = await jwt.sign({_id:user._id},'AMIT@777$99',);
+      // create a JWT token
+      const token = await jwt.sign({ _id: user._id }, "AMIT@777$99", {
+        expiresIn: "1d",
+      });
       console.log(token); //This will give you the token
 
       // Add the token to cookie and send the response back to the user
-      res.cookie("token",token);
-      res.send("Login successfull!!")
-      
+      res.cookie("token", token);
+      res.send("Login successfull!!");
+    } else {
+      return res.status(401).send("Invalid credentials!!");
     }
-    else{
-      return res.status(401).send("Invalid credentials!!")
-    }
-    
-    
-  }catch(err){
+  } catch (err) {
     res.status(400).send("Something went wrong!!" + err.message);
   }
-})
+});
 
-
-app.get("/profile", userAuth,async(req,res)=>{
-  try{
-    
-
-  
+app.get("/profile", userAuth, async (req, res) => {
+  try {
     const user = req.user; //This will give you the user object from the middleware
-    
-      res.send(user);
-    
-  }catch(err){
+
+    res.send(user);
+  } catch (err) {
     res.status(400).send("Something went wrong!!" + err.message);
   }
-   
-})
+});
 
-app.post("/sendConnectionRequest",userAuth,async(req,res)=>{
+app.post("/sendConnectionRequest", userAuth, async (req, res) => {
   const user = req.user;
-  console.log("Connection request sent!!")
-  res.send(user.firstName + " " + user.lastName + " sent you a connection request!!");
-  
-})
+  console.log("Connection request sent!!");
+  res.send(
+    user.firstName + " " + user.lastName + " sent you a connection request!!"
+  );
+});
 
 connectDB()
   .then(() => {
