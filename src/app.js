@@ -4,7 +4,8 @@ const app = express();
 const User = require("./models/user");
 const { validateSignUpData } = require("./utils/validation");
 const bycrypt = require("bcrypt");
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -49,17 +50,24 @@ app.post("/login",async(req,res )=>{
     }
     const isPasswordMatch = await bycrypt.compare(password,user.password);
     
-    if(!isPasswordMatch){
+    if(isPasswordMatch){
 
       //here I will write the logic of cookie
 
       // create a JWT token  
+      const token  = await jwt.sign({_id:user._id},'AMIT@777$99',);
+      console.log(token); //This will give you the token
 
       // Add the token to cookie and send the response back to the user
-      return res.status(401).send("Invalid password!!");
+      res.cookie("token",token);
+      res.send("Login successfull!!")
+      
     }
-    res.cookie("token","hello12345")
-    res.send("Login successfull!!")
+    else{
+      return res.status(401).send("Invalid credentials!!")
+    }
+    
+    
   }catch(err){
     res.status(400).send("Something went wrong!!" + err.message);
   }
@@ -68,6 +76,8 @@ app.post("/login",async(req,res )=>{
 
 app.get("/profile",async(req,res)=>{
     const cookies = req.cookies;
+
+    const {token} = cookies;
     console.log(cookies);
     res.send("Reading cookies....");
 })
