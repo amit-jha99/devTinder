@@ -80,7 +80,7 @@ app.get("/profile",async(req,res)=>{
 
     const {token} = cookies;
     if(!token){
-      return res.status(401).send("Unauthorized!!")
+      throw new Error("Invalid token!!");
     }
 
 
@@ -97,7 +97,7 @@ app.get("/profile",async(req,res)=>{
   }catch(err){
     res.status(400).send("Something went wrong!!" + err.message);
   }
-    // res.send("Reading cookies....");
+   
 })
 
 //Get user by email
