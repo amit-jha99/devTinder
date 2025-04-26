@@ -3,7 +3,7 @@ const connectDB = require("./config/database");
 const app = express();
 const User = require("./models/user");
 const { validateSignUpData } = require("./utils/validation");
-const bycrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 const { userAuth } = require("./middlewares/auth");
@@ -18,7 +18,7 @@ app.post("/signup", async (req, res) => {
 
     const { firstName, lastName, emailId, password } = req.body; //Destructuring the password from the request body
     //Encrypt the password
-    const passwordHash = await bycrypt.hash(password, 10); //10 is the number of rounds for hashing the password
+    const passwordHash = await bcrypt.hash(password, 10); //10 is the number of rounds for hashing the password
 
     console.log(passwordHash); //This will give you the hashed password
 
