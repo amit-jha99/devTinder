@@ -54,9 +54,7 @@ app.post("/login", async (req, res) => {
       //here I will write the logic of cookie
 
       // create a JWT token
-      const token = await jwt.sign({ _id: user._id }, "AMIT@777$99", {
-        expiresIn: "1d",
-      });
+      const token = await  user.getJWT(); //This function will return you a token
       console.log(token); //This will give you the token
 
       // Add the token to cookie and send the response back to the user
