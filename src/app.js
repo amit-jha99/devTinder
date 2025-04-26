@@ -48,7 +48,7 @@ app.post("/login", async (req, res) => {
     if (!user) {
       return res.status(404).send("User not found!!");
     }
-    const isPasswordMatch = await bycrypt.compare(password, user.password);
+    const isPasswordMatch = await user.validatePassword(password); //This function will return you a boolean value
 
     if (isPasswordMatch) {
       //here I will write the logic of cookie
