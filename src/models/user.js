@@ -78,9 +78,10 @@ userSchema.methods.getJWT = async function(){
       return token;
 }
 
-userSchema.methods.validatePassword = async function(){
+userSchema.methods.validatePassword = async function(passwordInputByUser){
     const user = this;
-    const isPasswordMatch  = await bycrypt.compare(password, user.password);
+    const passwordHash = user.password; //This is the hashed password from the database
+    const isPasswordMatch  = await bycrypt.compare(passwordInputByUser, passwordHash); //This is the password from the request body
     if(!isPasswordMatch){
         throw new Error("Invalid credentials!!");
     }
