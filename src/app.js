@@ -75,9 +75,14 @@ app.post("/login",async(req,res )=>{
 
 
 app.get("/profile",async(req,res)=>{
+  try{
     const cookies = req.cookies;
 
     const {token} = cookies;
+    if(!token){
+      return res.status(401).send("Unauthorized!!")
+    }
+
 
      const decodedMessage = await jwt.verify(token,'AMIT@777$99');
     console.log(decodedMessage); //This will give you the decoded message
@@ -89,7 +94,10 @@ app.get("/profile",async(req,res)=>{
     }else{
       res.send(user);
     }
-    res.send("Reading cookies....");
+  }catch(err){
+    res.status(400).send("Something went wrong!!" + err.message);
+  }
+    // res.send("Reading cookies....");
 })
 
 //Get user by email
