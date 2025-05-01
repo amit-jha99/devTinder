@@ -34,4 +34,5 @@ profileRouter.patch("/profile/edit/", userAuth, async (req, res) => {
     res.status(400).send("Something went wrong!!" + err.message);
   }
 });
+
 module.exports = profileRouter;
