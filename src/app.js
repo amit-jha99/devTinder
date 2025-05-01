@@ -13,15 +13,6 @@ app.use(cookieParser());
 
 
 
-app.get("/profile", userAuth, async (req, res) => {
-  try {
-    const user = req.user; //This will give you the user object from the middleware
-
-    res.send(user);
-  } catch (err) {
-    res.status(400).send("Something went wrong!!" + err.message);
-  }
-});
 
 app.post("/sendConnectionRequest", userAuth, async (req, res) => {
   const user = req.user;
