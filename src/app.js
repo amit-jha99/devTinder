@@ -12,6 +12,10 @@ const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
 const requestRouter = require("./routes/request");
 
+app.use ("/", authRouter); //This will use the authRouter for all the routes starting with /
+app.use ("/", profileRouter); //This will use the profileRouter for all the routes starting with /  
+app.use ("/", requestRouter); //This will use the requestRouter for all the routes starting with /
+
 connectDB()
   .then(() => {
     console.log("Database connection established.....");
