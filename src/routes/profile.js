@@ -2,7 +2,6 @@ const express = require("express");
 const profileRouter = express.Router();
 const { userAuth } = require("../middlewares/auth");
 const { validateEditProfileData } = require("../utils/validation"); //This function will validate the data coming from the client
-// const User = require("../models/user"); //This will import the user model
 
 profileRouter.get("/profile/view", userAuth, async (req, res) => {
   try {
