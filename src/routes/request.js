@@ -8,7 +8,7 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res)
    try {
       const fromUserId = req.user._id; //This will give you the user object from the middleware
       const toUserId = req.params.toUserId; //This will give you the user object from the middleware
-      const status = req.params.toUserId; //This will give you the user object from the middleware
+      const status = req.params.status; //This will give you the user object from the middleware
       const connectionRequest = new ConnectionRequest({
         fromUserId,
         toUserId,
