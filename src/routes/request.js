@@ -52,8 +52,13 @@ requestRouter.post(
         status,
       });
       const data = await connectionRequest.save(); //This will save the updated user object in the database
+      const message =
+        status === "interested"
+          ? `${req.user.firstName} ${req.user.lastName} is interested in connecting with ${toUser.firstName} ${toUser.lastName}!`
+          : `${req.user.firstName} ${req.user.lastName} has ignored ${toUser.firstName} ${toUser.lastName} connection request.`;
+
       res.json({
-        message: `${req.user.firstName} ${req.user.lastName} sent you a connection request!!`,
+        message: message,
         data: data,
       });
     } catch (err) {
