@@ -28,7 +28,7 @@ connectionRequestSchema.pre("save",function(next){
     const connectionRequest = this;
     //Check if the fromUserId is same as toUserId
     if(connectionRequest.fromUserId.equals(connectionRequest.toUserId)){
-        throw new Error("fromUserId and toUserId should not be same!!")
+        throw new Error("You cannot send the connecton request to yourself!!")
     }
     next();
 })
