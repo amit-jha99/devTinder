@@ -3,7 +3,7 @@ const requestRouter = express.Router();
 const { userAuth } = require("../middlewares/auth");
 const ConnectionRequest = require("../models/connectionRequest");
 
-requestRouter.post("/request/send/interested/:toUserId", userAuth, async (req, res) => {
+requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res) => {
     
    try {
       const fromUserId = req.user._id; //This will give you the user object from the middleware
