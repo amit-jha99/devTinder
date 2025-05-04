@@ -73,6 +73,29 @@ requestRouter.post(
   async (req, res) => {
     try {
       const loggedInUser = req.user; //This will give you the user object from the middleware
+      const{status,requestId} = req.params; //This will give you the user object from the middleware
+       // Validate the status 
+      const allowedStatus = ["accepted", "rejected"];
+      if(!allowedStatus.includes(status)){
+        return res.status(400).json({
+          message:"Invalid status type!!" + req.params.status,
+        })
+      }
+
+      const connectionRequest = await ConnectionRequest.findOne({
+        _id:requestId,
+        toUserId:loggedInUser._id,
+        status:"interested",
+      })
+      if(!connectionRequest){
+        return res.status(404).json({
+          message:"Connection request not found!!",
+        })
+      }
+
+     
+
+     
     } catch (err) {
       res.status(400).send("Something went wrong!!" + err.message);
     }
