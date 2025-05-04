@@ -4,11 +4,12 @@ const { userAuth } = require('../middlewares/auth');
 const connectionRequest = require('../models/connectionRequest');
 
 //get all the pending connection request for the logged in user
-userRouter.get('/user/requests', userAuth,async(req,res)=>{
+userRouter.get('/user/requests/received', userAuth,async(req,res)=>{
     try{
         const loggedInUser = req.user;
         const connectionRequests = await connectionRequest.find({
             toUserId: loggedInUser._id,
+            status:"interested",
         })
         res.json({
             message: "All the connection requests",
