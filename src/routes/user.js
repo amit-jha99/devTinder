@@ -3,6 +3,8 @@ const userRouter = express.Router();
 const { userAuth } = require('../middlewares/auth');
 const connectionRequest = require('../models/connectionRequest');
 
+const USER_SAFE_DATA = "firstName lastName photoUrl age";
+
 //get all the pending connection request for the logged in user
 userRouter.get('/user/requests/received', userAuth,async(req,res)=>{
     try{
@@ -36,7 +38,7 @@ userRouter.get('/user/connections',userAuth,async(req,res)=>{
                     status:"accepted",
                 }
             ]
-        }).populate("fromUserId",["firstName","lastName","photoUrl"]);
+        }).populate("fromUserId",USER_SAFE_DATA);
         res.json({
             message: "All the connections",
             data: connections,
