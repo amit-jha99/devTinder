@@ -46,9 +46,14 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
           },
         ],
       })
-      .populate("fromUserId", USER_SAFE_DATA);
+      .populate("fromUserId", USER_SAFE_DATA).populate("toUserId", USER_SAFE_DATA); //This will populate the fromUserId field with the firstName, lastName and photoUrl of the user
 
-    const data = connections.map((row) => row.fromUserId);
+    const data = connections.map((row) => {
+        if(row.fromUserId._id.toString()===loggedInUser._id.toString()){
+           return  row.toUserId ;
+        }
+        return row.fromUserId;
+    });
     res.json({
       message: "All the connections",
       data: data,
