@@ -97,7 +97,7 @@ requestRouter.post(
       connectionRequest.status = status; //This will update the user object with the new data coming from the client
       const data = await connectionRequest.save(); //This will save the updated user object in the database
       res.status(200).json({
-        message: `$Connection request ${status} successfully!`,
+        message: `Connection request ${status} successfully!`,
         data: data,
       });
 
