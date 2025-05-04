@@ -2,7 +2,7 @@ const express = require("express");
 const requestRouter = express.Router();
 const { userAuth } = require("../middlewares/auth");
 const ConnectionRequest = require("../models/connectionRequest");
-const User = require("../models/user"); 
+const User = require("../models/user");
 
 requestRouter.post(
   "/request/send/:status/:toUserId",
@@ -61,6 +61,18 @@ requestRouter.post(
         message: message,
         data: data,
       });
+    } catch (err) {
+      res.status(400).send("Something went wrong!!" + err.message);
+    }
+  }
+);
+
+requestRouter.post(
+  "/request/review/:status/:requestId",
+  userAuth,
+  async (req, res) => {
+    try {
+      const loggedInUser = req.user; //This will give you the user object from the middleware
     } catch (err) {
       res.status(400).send("Something went wrong!!" + err.message);
     }
