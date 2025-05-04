@@ -29,11 +29,11 @@ userRouter.get('/user/connections',userAuth,async(req,res)=>{
             $or:[
                 {
                     fromUserId:loggedInUser._id,
-                    status:"interested",
+                    status:"accepted",
                 }
                 ,{
                     toUserId:loggedInUser._id,
-                    status:"interested",
+                    status:"accepted",
                 }
             ]
         })
