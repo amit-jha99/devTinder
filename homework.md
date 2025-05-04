@@ -108,5 +108,8 @@
 - Why do we need index in DB?
 - What is the advantages and disadvantages of creating?
 
-
-- Write code wtih proper validations for POST /request/review/:status/:requestId
+- 
+- Write code with proper validations for POST /user/request/review/:status/:requestId 
+- Throught process GET vs POST 
+- Read about ref and populate 
+- write code for GET /user/reqeust/received with all the checks.
