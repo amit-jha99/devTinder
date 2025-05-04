@@ -36,7 +36,11 @@ userRouter.get('/user/connections',userAuth,async(req,res)=>{
                     status:"accepted",
                 }
             ]
-        })
+        }).populate("fromUserId",["firstName","lastName","photoUrl"]);
+        res.json({
+            message: "All the connections",
+            data: connections,
+        });
 
     }
     catch(err){
