@@ -113,3 +113,4 @@
 - Throught process GET vs POST 
 - Read about ref and populate 
 - write code for GET /user/reqeust/received with all the checks.
+- Create GET /user/connections.
