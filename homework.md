@@ -114,3 +114,6 @@
 - Read about ref and populate 
 - write code for GET /user/reqeust/received with all the checks.
 - Create GET /user/connections.
+
+- Logic for GET /feed API
+- Explore the $nin,$and,$ne and other query operators.
