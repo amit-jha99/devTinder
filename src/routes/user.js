@@ -65,6 +65,23 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
 
 userRouter.get("/user/feed",userAuth,async (req,res)=>{
     try{
+      // User should see all the user cards except 
+      //0. his own card
+      //1. his connecitons 
+      //2. ignored people
+      //3. already sent the connecion request
+
+      const loggedInUser = req.user;
+      //Find all connection requests(send+ received)
+
+      const connectionRequests = await connectionReqeust.find({
+        $or:[
+          {fromUserId:loggedInUser._id},
+          {toUserId:loggedInUser._id}
+        ]
+      });
+
+
 
     }catch(err){
         res.status(400).send("Something went wrong!!" + err.message);
