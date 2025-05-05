@@ -34,13 +34,13 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
   try {
     const loggedInUser = req.user;
     const connections = await connectionRequest
-      .find({
+      .find({ 
         $or: [
           {
             fromUserId: loggedInUser._id,
             status: "accepted",
           },
-          {
+          { 
             toUserId: loggedInUser._id,
             status: "accepted",
           },
@@ -62,4 +62,12 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
     res.status(400).send("Something went wrong!!" + err.message);
   }
 });
+
+userRouter.get("/user/feed",userAuth,async (req,res)=>{
+    try{
+
+    }catch(err){
+        res.status(400).send("Something went wrong!!" + err.message);
+    }
+})
 module.exports = userRouter;
