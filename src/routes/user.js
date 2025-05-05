@@ -78,10 +78,8 @@ userRouter.get("/feed", userAuth, async (req, res) => {
     const connectionRequests = await connectionRequest
       .find({
         $or: [{ fromUserId: loggedInUser._id }, { toUserId: loggedInUser._id }],
-      })
-      .select("fromUserId toUserId")
-      .populate("fromUserId", "firstName")
-      .populate("toUserId", "firstName");
+      }).select("fromUserId toUserId")
+      
     res.send(connectionRequests);
   } catch (err) {
     res.status(400).send("Something went wrong!!" + err.message);
