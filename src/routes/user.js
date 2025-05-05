@@ -2,6 +2,7 @@ const express = require("express");
 const userRouter = express.Router();
 const { userAuth } = require("../middlewares/auth");
 const connectionRequest = require("../models/connectionRequest");
+const User = require("../models/user");
 
 const USER_SAFE_DATA = "firstName lastName photoUrl age";
 
@@ -93,7 +94,7 @@ userRouter.get("/feed", userAuth, async (req, res) => {
         ]
       })
       
-    res.send(connectionRequests);
+    res.send(users);
   } catch (err) {
     res.status(400).send("Something went wrong!!" + err.message);
   }
