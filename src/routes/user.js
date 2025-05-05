@@ -74,7 +74,7 @@ userRouter.get("/feed",userAuth,async (req,res)=>{
       const loggedInUser = req.user;
       //Find all connection requests(send+ received)
 
-      const connectionRequests = await connectionReqeust.find({
+      const connectionRequests = await connectionRequest.find({
         $or:[
           {fromUserId:loggedInUser._id},
           {toUserId:loggedInUser._id}
