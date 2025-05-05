@@ -34,25 +34,26 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
   try {
     const loggedInUser = req.user;
     const connections = await connectionRequest
-      .find({ 
+      .find({
         $or: [
           {
             fromUserId: loggedInUser._id,
             status: "accepted",
           },
-          { 
+          {
             toUserId: loggedInUser._id,
             status: "accepted",
           },
         ],
       })
-      .populate("fromUserId", USER_SAFE_DATA).populate("toUserId", USER_SAFE_DATA); //This will populate the fromUserId field with the firstName, lastName and photoUrl of the user
+      .populate("fromUserId", USER_SAFE_DATA)
+      .populate("toUserId", USER_SAFE_DATA); //This will populate the fromUserId field with the firstName, lastName and photoUrl of the user
 
     const data = connections.map((row) => {
-        if(row.fromUserId._id.toString()===loggedInUser._id.toString()){
-           return  row.toUserId ;
-        }
-        return row.fromUserId;
+      if (row.fromUserId._id.toString() === loggedInUser._id.toString()) {
+        return row.toUserId;
+      }
+      return row.fromUserId;
     });
     res.json({
       message: "All the connections",
@@ -63,29 +64,27 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
   }
 });
 
-userRouter.get("/feed",userAuth,async (req,res)=>{
-    try{
-      // User should see all the user cards except 
-      //0. his own card
-      //1. his connecitons 
-      //2. ignored people
-      //3. already sent the connecion request
+userRouter.get("/feed", userAuth, async (req, res) => {
+  try {
+    // User should see all the user cards except
+    //0. his own card
+    //1. his connecitons
+    //2. ignored people
+    //3. already sent the connecion request
 
-      const loggedInUser = req.user;
-      //Find all connection requests(send+ received)
+    const loggedInUser = req.user;
+    //Find all connection requests(send+ received)
 
-      const connectionRequests = await connectionRequest.find({
-        $or:[
-          {fromUserId:loggedInUser._id},
-          {toUserId:loggedInUser._id}
-        ]
-      }).select("fromUserId toUserId");
-      res.send(connectionRequests);
-
-
-
-    }catch(err){
-        res.status(400).send("Something went wrong!!" + err.message);
-    }
-})
+    const connectionRequests = await connectionRequest
+      .find({
+        $or: [{ fromUserId: loggedInUser._id }, { toUserId: loggedInUser._id }],
+      })
+      .select("fromUserId toUserId")
+      .populate("fromUserId", "firstName")
+      .populate("toUserId", "firstName");
+    res.send(connectionRequests);
+  } catch (err) {
+    res.status(400).send("Something went wrong!!" + err.message);
+  }
+});
 module.exports = userRouter;
