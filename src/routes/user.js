@@ -75,7 +75,8 @@ userRouter.get("/feed", userAuth, async (req, res) => {
 
     const loggedInUser = req.user;
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;//default page is 1
+    let limit = parseInt(req.query.limit) || 10;//default page is 1
+    limit = limit > 50 ?50:limit;
     const skip = (page-1) * limit; //skip the first (page-1)*limit records
     //Find all connection requests(send+ received)
 
