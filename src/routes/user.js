@@ -80,6 +80,7 @@ userRouter.get("/user/feed",userAuth,async (req,res)=>{
           {toUserId:loggedInUser._id}
         ]
       });
+      res.send(connectionRequests);
 
 
 
